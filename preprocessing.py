@@ -1,51 +1,39 @@
 import pandas as pd
-import preprocessor as p
 import re, nltk
 from tqdm import tqdm
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+porter_stemmer = PorterStemmer()
+from nltk.stem import WordNetLemmatizer
+wordnet_lemmatizer = WordNetLemmatizer()
 
-def take_data_to_shower(tweets):
-    clean_tweets = pd.DataFrame(columns=["id", "tweet"])
-
-    # Preprocessor settings
-    p.set_options(p.OPT.URL, p.OPT.EMOJI, p.OPT.MENTION, p.OPT.SMILEY, p.OPT.NUMBER)
-
-    for index ,tweet in tqdm(tweets.iterrows(), "Cleaning Data"):
-        clean_tweet = p.clean(tweet['tweet']) # Removes Mentions, Smiles, Numbers, URLs
-        clean_tweet = remove_noise(clean_tweet) # Removes Punctuation and Undersired Chars
-        clean_tweet = remove_emojis(clean_tweet)
-        clean_tweets = clean_tweets.append({'id': tweet['id'], 'tweet': clean_tweet}, ignore_index=True)
-
-    return clean_tweets
-
-
-def remove_noise(clean_tweet):
-    noises = ['#', '_', 'URL', ',', '.', '"', "'", '?', '!', '+', '=', '*']
-    noises.extend(['-', '(', ')', ']', '[', '&', '$', '\\', '/', ':', '%', ';'])
-    noises.extend(['1','2','3','4','5','6','7','8','9'])
+def take_data_to_shower(tweet):
+    noises = ['URL', 'USER', '\'ve', 'n\'t', '\'s', '\'m']
 
     for noise in noises:
-        clean_tweet = clean_tweet.replace(noise, '')
+        tweet = tweet.replace(noise, '')
 
-    return clean_tweet
-
-
-def remove_emojis(clean_tweet):
-    emoji_pattern = re.compile(u"[^\U00000000-\U0000d7ff\U0000e000-\U0000ffff]", flags=re.UNICODE)
-    clean_tweet = emoji_pattern.sub(r'', clean_tweet)
-
-    emoji_pattern = re.compile("["
-                           u"\U0001F600-\U0001F64F"  # emoticons
-                           u"\U0001F300-\U0001F5FF"  # symbols & pictographs
-                           u"\U0001F680-\U0001F6FF"  # transport & map symbols
-                           u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
-                           u"\U00002702-\U000027B0"
-                           u"\U000024C2-\U0001F251"
-                           "]+", flags=re.UNICODE)
-
-    clean_tweet = emoji_pattern.sub(r'', clean_tweet)
-
-    return clean_tweet
+    return re.sub(r'[^a-zA-Z]', ' ', tweet)
 
 
 def tokenize(tweet):
     return tweet.split(' ')
+
+
+def remove_stop_words(tokens):
+    clean_tokens = []
+    stopWords = set(stopwords.words('english'))
+    for token in tokens:
+        if token not in stopWords:
+            if token.replace(' ', '') != '':
+                clean_tokens.append(token)
+    return clean_tokens
+
+
+def stem_and_lem(tokens):
+    clean_tokens = []
+    for token in tokens:
+        token = porter_stemmer.stem(token)
+        token = wordnet_lemmatizer.lemmatize(token)
+        clean_tokens.append(token)
+    return clean_tokens
