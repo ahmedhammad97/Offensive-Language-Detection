@@ -1,19 +1,19 @@
 import pandas as pd
 import preprocessor as p
-import re
+import re, nltk
 from tqdm import tqdm
 
 def take_data_to_shower(tweets):
-    clean_tweets = pd.DataFrame(columns=["tweet"])
+    clean_tweets = pd.DataFrame(columns=["id", "tweet"])
 
     # Preprocessor settings
     p.set_options(p.OPT.URL, p.OPT.EMOJI, p.OPT.MENTION, p.OPT.SMILEY, p.OPT.NUMBER)
 
-    for tweet in tqdm(tweets['tweet'], "Cleaning Data"):
-        clean_tweet = p.clean(tweet) # Removes Mentions, Smiles, Numbers, URLs
+    for index ,tweet in tqdm(tweets.iterrows(), "Cleaning Data"):
+        clean_tweet = p.clean(tweet['tweet']) # Removes Mentions, Smiles, Numbers, URLs
         clean_tweet = remove_noise(clean_tweet) # Removes Punctuation and Undersired Chars
         clean_tweet = remove_emojis(clean_tweet)
-        clean_tweets = clean_tweets.append({'tweet': clean_tweet}, ignore_index=True)
+        clean_tweets = clean_tweets.append({'id': tweet['id'], 'tweet': clean_tweet}, ignore_index=True)
 
     return clean_tweets
 
@@ -45,3 +45,7 @@ def remove_emojis(clean_tweet):
     clean_tweet = emoji_pattern.sub(r'', clean_tweet)
 
     return clean_tweet
+
+
+def tokenize(tweet):
+    return tweet.split(' ')
