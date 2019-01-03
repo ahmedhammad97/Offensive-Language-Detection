@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
-import preprocessing
+import preprocessing, embedding
 import copy
 from nltk.tokenize import word_tokenize
 
@@ -28,6 +28,5 @@ clean_tweets['tokens'] = clean_tweets['tokens'].progress_apply(preprocessing.rem
 tqdm.pandas(desc="Stemming And Lemmatizing")
 clean_tweets['tokens'] = clean_tweets['tokens'].progress_apply(preprocessing.stem_and_lem)
 
-tfile = open('output.txt', 'a')
-tfile.write(clean_tweets.to_string())
-tfile.close()
+text_vector = clean_tweets['tokens'].tolist()
+model = embedding.build_model(text_vector, True)

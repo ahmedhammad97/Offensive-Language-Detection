@@ -2,8 +2,8 @@ import pandas as pd
 import re, nltk
 from tqdm import tqdm
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-porter_stemmer = PorterStemmer()
+from nltk.stem.lancaster import LancasterStemmer
+lancaster_stemmer = LancasterStemmer()
 from nltk.stem import WordNetLemmatizer
 wordnet_lemmatizer = WordNetLemmatizer()
 
@@ -33,7 +33,7 @@ def remove_stop_words(tokens):
 def stem_and_lem(tokens):
     clean_tokens = []
     for token in tokens:
-        token = porter_stemmer.stem(token)
+        token = lancaster_stemmer.stem(token)
         token = wordnet_lemmatizer.lemmatize(token)
         clean_tokens.append(token)
     return clean_tokens
