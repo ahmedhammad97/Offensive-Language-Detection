@@ -1,5 +1,7 @@
 from os import listdir
 from gensim.models import Word2Vec
+from tqdm import tqdm
+import numpy as np
 
 def build_model(text_vector, retrain=False):
     model = None
@@ -13,8 +15,12 @@ def build_model(text_vector, retrain=False):
         model = Word2Vec.load('./dict.model')
         print("Loaded Successfully...")
 
-    #Tesing only
-    print("TESTING ONLY PRINTS")
-    print(model.wv.most_similar(positive="shit"))
-
     return model
+
+
+def vectorize(model, text_vector):
+    vector = model.wv
+    vectors = [np.array([vector[word] for word in tweet if word in model]).flatten() for tweet in tqdm(text_vector,'Vectorizing Phase I...')]
+    max_length = np.max([len(vector) for vector in vectors])
+    result_vectors = [np.array(vector.tolist()+[0 for _ in range(max_length-len(vector))]) for vector in tqdm(vectors,'Vectorizing Phase II...')]
+    return result_vectors

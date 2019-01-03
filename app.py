@@ -29,4 +29,10 @@ tqdm.pandas(desc="Stemming And Lemmatizing")
 clean_tweets['tokens'] = clean_tweets['tokens'].progress_apply(preprocessing.stem_and_lem)
 
 text_vector = clean_tweets['tokens'].tolist()
-model = embedding.build_model(text_vector, True)
+model = embedding.build_model(text_vector)
+vectors = embedding.vectorize(model, text_vector)
+
+print(len(vectors))
+print(len(clean_tweets)
+# Same!! Hell yeah!
+# Now assign labels 
