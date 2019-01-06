@@ -9,6 +9,7 @@ def build_model(text_vector, retrain=False):
         print("Training The Model..Please Be Patient...")
         model = Word2Vec(text_vector, size=80, window=15, min_count=1, workers=5)
         model.train(text_vector, total_examples=len(text_vector), epochs=15)
+        model.save('./dict.model')
         print("Model Trained And Saved Successfully...")
     else:
         print("Loading Model...")
