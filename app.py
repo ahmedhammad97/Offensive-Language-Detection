@@ -1,10 +1,9 @@
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
-import preprocessing, embedding, helper
+import preprocessing, embedding, helper, classifying
 import copy
-from nltk.tokenize import word_tokenize
-from sklearn.model_selection import train_test_split
+
 
 directory = "datasets/training-v1/offenseval-training-v1.tsv"
 print("Reading Dataset...")
@@ -30,9 +29,9 @@ tqdm.pandas(desc="Stemming And Lemmatizing")
 clean_tweets['tokens'] = clean_tweets['tokens'].progress_apply(preprocessing.stem_and_lem)
 
 text_vector = clean_tweets['tokens'].tolist()
-model = embedding.build_model(text_vector)
+#model = embedding.build_model(text_vector)
 
-vectors_a = embedding.vectorize(model, text_vector) # Numerical Vectors A
+vectors_a = embedding.tfid(text_vector) # Numerical Vectors A
 labels_a = subtask_a_labels['subtask_a'].values.tolist() # Subtask A Labels
 
 vectors_b = helper.get_vectors(vectors_a, labels_a, "OFF") # Numerical Vectors B
@@ -41,5 +40,5 @@ labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask A Labels
 vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
 labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
 
-# Random Splitting With Ratio 3 : 1
-#train_vectors, test_vectors, train_labels, test_labels = train_test_split(vectors, labels, test_size=0.25)
+print("Building Model...")
+classifying.classify(vectors_a[4000:8000], labels_a[4000:8000], "DT")
