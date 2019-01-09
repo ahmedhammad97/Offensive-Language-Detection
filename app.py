@@ -40,5 +40,8 @@ labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask A Labels
 vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
 labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
 
-print("Building Model...")
-classifying.classify(vectors_a[4000:8000], labels_a[4000:8000], "DT")
+# print("\nBuilding Model Subtask A...")
+# classifying.classify(vectors_a[2000:4000], labels_a[2000:4000], "DT")
+
+print("\nBuilding Model Subtask B...")
+classifying.classify(vectors_b[1000:3000], labels_b[1000:3000], "RF")

@@ -27,7 +27,7 @@ def classify(vectors, labels, type="SVM"):
     elif(type=="DT"):
         classifier = DecisionTreeClassifier()
         params = {'criterion':['gini','entropy'],'max_depth':[5,10,20,50,100,200]}
-        #classifier = GridSearchCV(classifier, params, cv=3)
+        classifier = GridSearchCV(classifier, params, cv=3)
     elif(type=="RF"):
         classifier = RandomForestClassifier()
         classifier = GridSearchCV(classifier, {'n_estimators': [n for n in range(10,100,10)]}, cv=3)
@@ -42,6 +42,8 @@ def classify(vectors, labels, type="SVM"):
     print("Tuning .. Please be patient...")
 
     classifier.fit(train_vectors, train_labels)
-    #classifier = classifier.best_estimator_
+    classifier = classifier.best_estimator_
+    accuracy = accuracy_score(train_labels, classifier.predict(train_vectors))
+    print("Training Accuracy:", accuracy)
     accuracy = accuracy_score(test_labels, classifier.predict(test_vectors))
-    print("Accuracy:", accuracy)
+    print("Test Accuracy:", accuracy)
