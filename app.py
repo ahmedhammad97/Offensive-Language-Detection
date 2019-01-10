@@ -41,7 +41,10 @@ vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
 labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
 
 # print("\nBuilding Model Subtask A...")
-# classifying.classify(vectors_a[2000:4000], labels_a[2000:4000], "DT")
+# classifying.classify(vectors_a[0:12000], labels_a[0:12000], "DT") # {GNB, MNB, KNN, SVM, DT, RF}
 
 print("\nBuilding Model Subtask B...")
-classifying.classify(vectors_b[1000:3000], labels_b[1000:3000], "RF")
+classifying.classify(vectors_b[1500:3000], labels_b[1500:3000], "RF") # {GNB, MNB, KNN, SVM, DT, RF}
+
+# print("\nBuilding Model Subtask C...")
+# classifying.regress(vectors_c[1000:3000], labels_c[1000:3000])
