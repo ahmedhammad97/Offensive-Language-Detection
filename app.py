@@ -5,9 +5,11 @@ import preprocessing, embedding, helper, classifying
 import copy
 
 
-directory = "datasets/training-v1/offenseval-training-v1.tsv"
+train_directory = "datasets/training-v1/offenseval-training-v1.tsv"
 print("Reading Dataset...")
-train_data = pd.read_csv(directory, sep='\t', header=0)
+train_data = pd.read_csv(train_directory, sep='\t', header=0)
+
+print(test_data)
 
 tweets = train_data[["tweet"]]
 subtask_a_labels = train_data[["subtask_a"]]
@@ -40,11 +42,11 @@ labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask A Labels
 vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
 labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
 
-# print("\nBuilding Model Subtask A...")
-# classifying.classify(vectors_a[0:12000], labels_a[0:12000], "DT") # {GNB, MNB, KNN, SVM, DT, RF}
+print("\nBuilding Model Subtask A...")
+classifying.classify(vectors_a[5000:8000], labels_a[5000:8000], "DT") # {GNB, MNB, KNN, SVM, DT, RF, LR}
 
 print("\nBuilding Model Subtask B...")
-classifying.classify(vectors_b[1500:3000], labels_b[1500:3000], "RF") # {GNB, MNB, KNN, SVM, DT, RF}
+classifying.classify(vectors_b[2000:5000], labels_b[2000:5000], "RF") # {GNB, MNB, KNN, SVM, DT, RF, LR}
 
-# print("\nBuilding Model Subtask C...")
-# classifying.regress(vectors_c[1000:3000], labels_c[1000:3000])
+print("\nBuilding Model Subtask C...")
+classifying.classify(vectors_c[1000:3000], labels_c[1000:3000], "DT") # {GNB, MNB, KNN, SVM, DT, RF, LR}

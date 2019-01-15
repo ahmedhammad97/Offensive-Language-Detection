@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -6,7 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 
 def classify(vectors, labels, type="SVM"):
     # Random Splitting With Ratio 3 : 1
@@ -32,7 +33,7 @@ def classify(vectors, labels, type="SVM"):
         classifier = classifier.best_estimator_
     elif(type=="DT"):
         classifier = DecisionTreeClassifier()
-        params = {'criterion':['gini','entropy'],'max_depth':[5,10,20,50,100,200]}
+        params = {'criterion':['gini','entropy'],'max_depth':[20,50,100,200,500]}
         classifier = GridSearchCV(classifier, params, cv=3)
         classifier.fit(train_vectors, train_labels)
         classifier = classifier.best_estimator_
@@ -41,24 +42,16 @@ def classify(vectors, labels, type="SVM"):
         classifier = GridSearchCV(classifier, {'n_estimators': [n for n in range(10,100,10)]}, cv=3)
         classifier.fit(train_vectors, train_labels)
         classifier = classifier.best_estimator_
+    elif(type=="LR"):
+        classifier = LogisticRegression(multi_class='auto', solver='newton-cg',)
+        classifier = GridSearchCV(classifier, {"C":np.logspace(-3,3,7), "penalty":["l2"]}, cv=3)
+        classifier.fit(train_vectors, train_labels)
+        classifier = classifier.best_estimator_
     else:
         print("Wrong Classifier Type!")
         return
 
-    print("Tuning .. Please be patient...")
-
     accuracy = accuracy_score(train_labels, classifier.predict(train_vectors))
     print("Training Accuracy:", accuracy)
     accuracy = accuracy_score(test_labels, classifier.predict(test_vectors))
-    print("Test Accuracy:", accuracy)
-
-
-def regress(vectors, labels):
-    # Random Splitting With Ratio 3 : 1
-    train_vectors, test_vectors, train_labels, test_labels = train_test_split(vectors, labels, test_size=0.25)
-
-    regressor = LinearRegression()
-    regressor.fit(train_vectors, train_labels)
-    print("Training Accuracy:", accuracy)
-    accuracy = accuracy_score(test_labels, regressor.predict(test_vectors))
     print("Test Accuracy:", accuracy)
