@@ -9,8 +9,6 @@ train_directory = "datasets/training-v1/offenseval-training-v1.tsv"
 print("Reading Dataset...")
 train_data = pd.read_csv(train_directory, sep='\t', header=0)
 
-print(test_data)
-
 tweets = train_data[["tweet"]]
 subtask_a_labels = train_data[["subtask_a"]]
 subtask_b_labels = train_data.query("subtask_a == 'OFF'")[["subtask_b"]]
