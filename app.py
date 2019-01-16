@@ -41,10 +41,10 @@ vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
 labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
 
 print("\nBuilding Model Subtask A...")
-classifying.classify(vectors_a[5000:8000], labels_a[5000:8000], "DT") # {GNB, MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_a[:], labels_a[:], "MNB") # {MNB, KNN, SVM, DT, RF, LR}
 
 print("\nBuilding Model Subtask B...")
-classifying.classify(vectors_b[2000:5000], labels_b[2000:5000], "RF") # {GNB, MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_b[:], labels_b[:], "RF") # {MNB, KNN, SVM, DT, RF, LR}
 
 print("\nBuilding Model Subtask C...")
-classifying.classify(vectors_c[1000:3000], labels_c[1000:3000], "DT") # {GNB, MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_c[:], labels_c[:], "LR") # {MNB, KNN, SVM, DT, RF, LR}
