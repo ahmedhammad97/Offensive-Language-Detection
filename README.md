@@ -1,5 +1,5 @@
 # Offensive Language Detector
-Digital bullying is a daily phenomena that each and every one has face from time to another.
+Digital bullying is a daily phenomena that each and every one face from time to another.
 
 Proposing a solution that uses machine learning classifiers to detect this offensive language (tweets in our case), and then decide whether it is targeted, and if so, it classifies the target.
 
