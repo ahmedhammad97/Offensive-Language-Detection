@@ -11,6 +11,14 @@ def tfid(text_vector):
     vectors = vectorizer.transform(untokenized_data).toarray()
     return vectors
 
+def tfid_test(train_vectors, test_vectors):
+    vectorizer = TfidfVectorizer()
+    untokenized_data =[' '.join(tweet) for tweet in train_vectors]
+    vectorizer = vectorizer.fit(untokenized_data)
+
+    untokenized_data =[' '.join(tweet) for tweet in test_vectors]
+    vectors = vectorizer.transform(untokenized_data).toarray()
+    return vectors
 
 # def build_model(text_vector, retrain=False):
 #     model = None

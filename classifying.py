@@ -8,11 +8,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
+from load_test_data import load
 
-def classify(vectors, labels, type="DT"):
+def classify(vectors, labels, train_text, task, type="DT"):
     # Random Splitting With Ratio 3 : 1
-    train_vectors, test_vectors, train_labels, test_labels = train_test_split(vectors, labels, test_size=0.25)
+    train_vectors, test_vectors, train_labels, test_labels = train_test_split(vectors, labels, test_size=0)
+    test_vectors, test_labels = load(train_text, task)
 
+    
     # Initialize Model
     classifier = None
     if(type=="MNB"):
@@ -55,5 +58,5 @@ def classify(vectors, labels, type="DT"):
     test_predictions = classifier.predict(test_vectors)
     accuracy = accuracy_score(test_labels, test_predictions)
     print("Test Accuracy:", accuracy)
-    print("Confusion Matrix:", )
-    print(confusion_matrix(test_labels, test_predictions))
+    #print("Confusion Matrix:", )
+    #print(confusion_matrix(test_labels, test_predictions))

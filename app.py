@@ -29,7 +29,6 @@ tqdm.pandas(desc="Stemming And Lemmatizing")
 clean_tweets['tokens'] = clean_tweets['tokens'].progress_apply(preprocessing.stem_and_lem)
 
 text_vector = clean_tweets['tokens'].tolist()
-#model = embedding.build_model(text_vector)
 
 vectors_a = embedding.tfid(text_vector) # Numerical Vectors A
 labels_a = subtask_a_labels['subtask_a'].values.tolist() # Subtask A Labels
@@ -41,10 +40,10 @@ vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
 labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
 
 print("\nBuilding Model Subtask A...")
-classifying.classify(vectors_a[:], labels_a[:], "MNB") # {MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_a[:], labels_a[:], text_vector, "A", "MNB") # {MNB, KNN, SVM, DT, RF, LR}
 
 print("\nBuilding Model Subtask B...")
-classifying.classify(vectors_b[:], labels_b[:], "RF") # {MNB, KNN, SVM, DT, RF, LR}
-
+classifying.classify(vectors_b[1000:3000], labels_b[1000:3000], text_vector, "B", "KNN") # {MNB, KNN, SVM, DT, RF, LR}
+#
 print("\nBuilding Model Subtask C...")
-classifying.classify(vectors_c[:], labels_c[:], "LR") # {MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_c[1000:3000], labels_c[1000:3000], text_vector, "C", "RF") # {MNB, KNN, SVM, DT, RF, LR}
