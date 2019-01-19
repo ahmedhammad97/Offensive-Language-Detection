@@ -26,13 +26,13 @@ Finally the best estimator of the selected classifier is used to predict the tes
 
 ## Results
 	Classifing whether the tweet is offensive:
-    	Training Accuracy : 0.89457
-        Test Accuracy : 0.83125
-        
-    Classifing whether the tweet is targeted:
-    	Training Accuracy : 0.913
-        Test Accuracy : 0.6947
-        
-    Classifing the target
-    	Training Accuracy : 0.9975
-        Test Accuracy : 0.805
+		Training Accuracy : 0.89457
+		Test Accuracy : 0.83125
+
+	Classifing whether the tweet is targeted:
+		Training Accuracy : 0.913
+		Test Accuracy : 0.6947
+
+	Classifing the target:
+		Training Accuracy : 0.9975
+		Test Accuracy : 0.805
