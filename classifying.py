@@ -12,7 +12,7 @@ from load_test_data import load
 
 def classify(vectors, labels, train_text, task, type="DT"):
     # Random Splitting With Ratio 3 : 1
-    train_vectors, test_vectors, train_labels, test_labels = train_test_split(vectors, labels, test_size=0)
+    train_vectors, test_vectors, train_labels, test_labels = train_test_split(vectors, labels, test_size=0.333)
     test_vectors, test_labels = load(train_text, task)
 
     
@@ -58,5 +58,5 @@ def classify(vectors, labels, train_text, task, type="DT"):
     test_predictions = classifier.predict(test_vectors)
     accuracy = accuracy_score(test_labels, test_predictions)
     print("Test Accuracy:", accuracy)
-    #print("Confusion Matrix:", )
-    #print(confusion_matrix(test_labels, test_predictions))
+    print("Confusion Matrix:", )
+    print(confusion_matrix(test_labels, test_predictions))
