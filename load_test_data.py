@@ -29,10 +29,10 @@ def load(train_vector, task='A'):
     labels_a = subtask_a_labels['subtask_a'].values.tolist() # Subtask A Labels
 
     vectors_b = helper.get_vectors(vectors_a, labels_a, "OFF") # Numerical Vectors B
-    labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask A Labels
+    labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask B Labels
 
     vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
-    labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
+    labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask C Labels
 
     if(task=='A' or task=='a'):
         return vectors_a, labels_a
@@ -41,5 +41,5 @@ def load(train_vector, task='A'):
     elif(task=='C' or task=='c'):
         return vectors_c, labels_c
     else:
-        print("Wrong Subtask!");
+        print("Wrong Subtask!")
         return None
