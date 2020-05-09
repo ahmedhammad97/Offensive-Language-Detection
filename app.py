@@ -34,16 +34,20 @@ vectors_a = embedding.tfid(text_vector) # Numerical Vectors A
 labels_a = subtask_a_labels['subtask_a'].values.tolist() # Subtask A Labels
 
 vectors_b = helper.get_vectors(vectors_a, labels_a, "OFF") # Numerical Vectors B
-labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask A Labels
+labels_b = subtask_b_labels['subtask_b'].values.tolist() # Subtask B Labels
 
 vectors_c = helper.get_vectors(vectors_b, labels_b, "TIN") # Numerical Vectors C
-labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask A Labels
+labels_c = subtask_c_labels['subtask_c'].values.tolist() # Subtask C Labels
 
 print("\nBuilding Model Subtask A...")
-classifying.classify(vectors_a[:], labels_a[:], text_vector, "A", "MNB") # {MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_a[:], labels_a[:], text_vector, "A", "MNB")
 
 print("\nBuilding Model Subtask B...")
-classifying.classify(vectors_b[1000:3000], labels_b[1000:3000], text_vector, "B", "KNN") # {MNB, KNN, SVM, DT, RF, LR}
-#
+classifying.classify(vectors_b[:], labels_b[:], text_vector, "B", "SVM")
+
 print("\nBuilding Model Subtask C...")
-classifying.classify(vectors_c[1000:3000], labels_c[1000:3000], text_vector, "C", "RF") # {MNB, KNN, SVM, DT, RF, LR}
+classifying.classify(vectors_c[:], labels_c[:], text_vector, "C", "RF")
+
+# You can choose from the classifiers {MNB, KNN, SVM, DT, RF, LR}
+# You can also try only a subset of the data for quick classification:
+#   vectors_a[1000:3000], labels_a[1000:3000]
