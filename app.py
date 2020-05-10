@@ -1,3 +1,10 @@
+#######################################
+## Author: Ahmed Hammad
+## License: MIT
+## Email: hammad97official@gmail.com
+## Website: www.ahmedhammad97.com
+#######################################
+
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
