@@ -1,4 +1,4 @@
-# Offensive Language Detector
+# Offensive Language Detection
 Digital bullying is a daily phenomena that each and every one face from time to another.
 
 Proposing a solution that uses machine learning classifiers to detect this offensive language (tweets in our case), and then decide whether it is targeted, and if so, it classifies the target.
